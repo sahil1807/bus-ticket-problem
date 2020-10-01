@@ -31,22 +31,30 @@ class BusController {
   }
 
   static async openTickets(req, res) {
-    Logger.log('info', 'Admin API for reset the bus tickets');
-    // Find if there is any unique active bus document available
-    const openTickets = [];
-    const activeBusJourney = await BusModel.getActiveBusJourney();
-    for (let i = 1; i <= activeBusJourney.numberOfSeats; i += 1) {
-      if (!activeBusJourney.bookedSeat.includes(i)) {
-        openTickets.push(i);
+    Logger.log('info', 'Finding open tickets in the bus');
+    try {
+      // Find if there is any unique active bus document available
+      const openTickets = [];
+      const activeBusJourney = await BusModel.getActiveBusJourney();
+      if (activeBusJourney) {
+        for (let i = 1; i <= activeBusJourney.numberOfSeats; i += 1) {
+          if (!activeBusJourney.bookedSeat.includes(i)) {
+            openTickets.push(i);
+          }
+        }
+        const response = {
+          totalSeats: activeBusJourney.numberOfSeats,
+          totalOpenSeats: openTickets.length,
+          totalBookedSeat: activeBusJourney.bookedSeat.length,
+          openTickets,
+        };
+        Response.success(res, 'success', response);
+      } else {
+        Response.fail(res, 'No active bus found');
       }
+    } catch (err) {
+      Response.fail(res, 'Not able to find out open tickets currently');
     }
-    const response = {
-      totalSeats: activeBusJourney.numberOfSeats,
-      totalOpenSeats: openTickets.length,
-      totalBookedSeat: activeBusJourney.bookedSeat.length,
-      openTickets,
-    };
-    Response.success(res, 'success', response);
   }
 
   static async closedTickets(req, res) {

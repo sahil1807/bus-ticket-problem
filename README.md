@@ -1,8 +1,18 @@
-# Node Boilerplate 🛡️
+# Bus ticket usecase
 
-This is a sample Boilerplate which can be used for starting any new Microservice project using Nodejs.
+This is a sample use case for solving bus ticket problem for a single bus traveller 
 
-This example repository has taken a lot of inputs from the blog post ['Bulletproof node.js project architecture'](https://softwareontheroad.com/ideal-nodejs-project-structure?utm_source=github&utm_medium=readme)
+
+## Context
+1 bus, 40 seats. One ticket per seat.  
+
+#####Features from the server:  
+• Update the ticket status (open/close + adding user details)  
+• View Ticket Status  
+• View all closed tickets  
+• View all open tickets  
+• View Details of person owning the ticket.  
+• Additional API for admin to reset the server (opens up all the tickets)  
 
 ## Development
 
@@ -27,8 +37,6 @@ Then just start the server with
 ```
 npm run start
 ```
-
-It uses nodemon for livereloading :peace-fingers:
 
 # API Validation
 
@@ -58,17 +66,3 @@ route.post(
 }
 ```
 
-[Read more about celebrate here](https://github.com/arb/celebrate) and [the Joi validation API](https://github.com/hapijs/joi/blob/v15.0.1/API.md)
-
-
-[![HitCount](http://hits.dwyl.com/sahil1807/node-boilerplate.svg)](http://hits.dwyl.com/sahil1807/node-boilerplate)
-
-
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)

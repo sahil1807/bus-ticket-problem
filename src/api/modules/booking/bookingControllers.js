@@ -66,10 +66,25 @@ class BookingController {
     }
   }
 
+  /**
+   * Controller function to check status of the ticket
+   * @param req
+   * @param res
+   * @returns {Promise<void>}
+   */
   static async ticketStatus(req, res) {
-    Logger.log('info', 'Finding status of ticket id');
-    const ticketDetails = await BookingModel.getBookingDetails({ bookingId: req.params.bookingId });
-    Response.success(res, 'success', ticketDetails);
+    try {
+      Logger.log('info', 'Finding status of ticket id');
+      const ticketDetails = await BookingModel.getBookingDetails({ bookingId: req.params.bookingId });
+      if (ticketDetails) {
+        Response.success(res, 'success', ticketDetails);
+      } else {
+        Response.fail(res, 'No ticket found with the given details');
+      }
+    } catch (err) {
+      Logger.log('error', 'Error encountered while reserving a ticket', err);
+      Response.fail(res, 'Error encountered while Reserving ticker');
+    }
   }
 }
 

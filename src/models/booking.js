@@ -37,7 +37,14 @@ const bookingSchema = new mongoose.Schema(
   { timestamps: true },
 );
 bookingSchema.statics.getBookingDetails = async function getBookingDetails(query) {
-  return BookingModel.findOne(query);
+  return BookingModel.findOne(query, {
+    _id: 0,
+    bookingId: 1,
+    bookingStatus: 1,
+    'passengerDetails.name': 1,
+    'passengerDetails.sequence': 1,
+    createdAt: 1,
+  });
 };
 
 bookingSchema.statics.updateStatus = async function getActiveBusJourney(bookingId, bookingStatus) {
