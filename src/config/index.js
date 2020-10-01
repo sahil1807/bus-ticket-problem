@@ -7,12 +7,8 @@ const config = {
   /**
    * That long string from mlab
    */
-  database: {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    name: process.env.DB_NAME,
-    host: process.env.DB_HOSTNAME,
-    dialect: 'postgres',
+  mongodb: {
+    connectionString: process.env.MONGODB_URI,
   },
 
   /**

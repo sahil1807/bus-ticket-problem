@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const basicAuth = require('express-basic-auth');
 const methodOverride = require('method-override');
 const { errors, isCelebrate } = require('celebrate');
 const morganBody = require('morgan-body');
@@ -37,6 +38,17 @@ exports.loadModules = ({ app }) => {
 
   // handle errors from 'celebrate'
   app.use(errors());
+
+  function getUnauthorizedResponse(req) {
+    return req.auth ? `Credentials ${req.auth.user}:${req.auth.password} rejected` : 'No credentials provided';
+  }
+
+  app.use(
+    basicAuth({
+      users: { admin: 'admin' },
+      unauthorizedResponse: getUnauthorizedResponse,
+    }),
+  );
 
   // Load API routes
   router.loadRoutes(app, prefix);

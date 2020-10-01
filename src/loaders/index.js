@@ -1,13 +1,10 @@
 const Logger = require('../config/Logger');
 const expressLoader = require('./express');
-const { sequelize } = require('./sequelize');
+const mongoLoader = require('./mongoose');
 
 const loader = async function({ expressApp }) {
-  await sequelize.authenticate();
+  await mongoLoader();
   Logger.log('info', '✌️ DB loaded and connected!');
-
-  await sequelize.runMigration();
-  Logger.log('info', '✌️ Migration ran!');
 
   await expressLoader.loadModules({ app: expressApp });
   Logger.log('info', '✌️ Express loaded');
