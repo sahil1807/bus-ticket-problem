@@ -17,7 +17,7 @@ class BookingController {
       if (activeBusJourney) {
         const found = activeBusJourney.bookedSeat.some(r => req.body.seatNumbers.includes(r));
         if (found) {
-          Response.fail(res, 'Some of the seats are already reserved previously');
+          Response.fail(res, 'Some of the seats are already reserved previously', 400, 400);
         } else {
           const bookingPayload = {
             bookingId: Math.random()
