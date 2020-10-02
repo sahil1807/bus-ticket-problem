@@ -42,6 +42,7 @@ bookingSchema.statics.getBookingDetails = async function getBookingDetails(query
     _id: 0,
     bookingId: 1,
     bookingStatus: 1,
+    seatNumbers: 1,
     'passengerDetails.name': 1,
     'passengerDetails.sequence': 1,
     createdAt: 1,
