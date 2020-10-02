@@ -24,7 +24,6 @@ class BookingController {
               .toString(36)
               .slice(6)
               .toUpperCase(),
-            price: req.body.price,
             passengers: req.body.passengers,
             seatNumbers: req.body.seatNumbers,
             passengerDetails: req.body.passengerDetails,
@@ -50,12 +49,13 @@ class BookingController {
    * @returns {Promise<void>}
    */
   static async cancelTicket(req, res) {
-    Logger.log('info', 'Reserving Ticket');
+    Logger.log('info', 'Cancelling Ticket');
     try {
       const ticketDetails = await BookingModel.getBookingDetails({ bookingId: req.params.bookingId });
       if (ticketDetails) {
-        await BookingModel.updateStatus(req.params.bookingId, req.body.status);
+        const updatedDetails = await BookingModel.updateStatus(req.params.bookingId, req.body.status);
         await BusModel.cancelSeats(ticketDetails.seatNumbers);
+        ticketDetails.bookingStatus = updatedDetails.bookingStatus;
         Response.success(res, 'success', ticketDetails);
       } else {
         Response.fail(res, 'No active bus found currently');

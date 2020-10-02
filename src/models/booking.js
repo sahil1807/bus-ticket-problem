@@ -24,7 +24,8 @@ const bookingSchema = new mongoose.Schema(
       default: 'booked',
     },
     price: {
-      type: String,
+      type: Number,
+      default: 100,
     },
     passengers: {
       type: Number,
@@ -54,6 +55,10 @@ bookingSchema.statics.updateStatus = async function getActiveBusJourney(bookingI
     },
     {
       $set: { bookingStatus },
+    },
+    {
+      new: true,
+      returnOriginal: false,
     },
   );
 };
